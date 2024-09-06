@@ -2,146 +2,118 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
-    <title>Ultra-Fast Luxury Countdown Timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flip Countdown Timer</title>
     <style>
-body {
-  font-family: Garet, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-color: #302d3a;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  image-rendering: crisp-edges;
-}
+      body {
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background-color: #302D3A; /* Updated background color */
+        color: #f5f5f5;
+        text-align: center;
+      }
 
-video.bg-video {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  object-fit: cover; /* Ensures the video covers the entire screen */
-  pointer-events: none;
-}
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #f5eb9b;
+      }
 
-.frame {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  display: flex;
-  justify-content: center; /* Center the frame content */
-}
-
-#countdown {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center all countdown items */
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.countdown-row {
-  display: flex;
-  justify-content: center; /* Center the countdown items */
-  gap: 15px;
+     .countdown {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Reduced gap between boxes */
 }
 
 .countdown-item {
-  opacity: 0;
-  transform: scale(0.5);
-  padding: 10px;
-  border-radius: 10px;
-  border: 2px solid #bb984d;
-  backdrop-filter: blur(5px);
-  color: #bb984d;
-  background: rgba(255, 255, 255, 0.1);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 120px; /* Set width of each countdown box */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 calc(50% - 10px); /* Reduced space between boxes */
 }
 
-.countdown-item span {
-  font-size: 2rem;
-  color: #bb984d;
-  display: block;
+.number-box {
+    background: #1c1c1c;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100px; /* Adjusted width */
+    height: 130px; /* Adjusted height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.countdown-item .label {
-  font-size: 1rem;
-  margin-top: 5px;
+.number-box span {
+    font-size: 4rem; /* Adjusted font size */
+    font-weight: bold;
+    color: #f5eb9b;
 }
 
-@media (max-width: 480px) {
-  .countdown-item {
-    width: 100px; /* Adjust the width for smaller screens */
-    padding: 8px;
-  }
 
-  .countdown-item span {
-    font-size: 1.6rem;
-  }
+      .label {
+        font-size: 1.2rem; /* Slightly larger label text */
+        color: #bb984d;
+        margin-top: 10px;
+        text-transform: uppercase;
+      }
 
-  .countdown-item .label {
-    font-size: 0.9rem;
-  }
+      /* Media query for smaller screens */
+      @media (max-width: 480px) {
+        .countdown-item {
+          flex: 1 1 45%; /* Two boxes per line with space in between */
+          margin-bottom: 20px;
+        }
 
-  -webkit-font-smoothing: subpixel-antialiased;
-  text-rendering: optimizeLegibility;
-}
+        .number-box {
+          width: 100px; /* Slightly reduce box size */
+          height: 130px;
+        }
 
-.pop-in {
-  opacity: 1;
-  transform: scale(1);
-}
-
+        .number-box span {
+          font-size: 3.5rem;  /* Adjust number size for smaller screens */
+        }
+      }
     </style>
   </head>
   <body>
-    <video class="bg-video" autoplay muted loop playsinline>
-      <source src="https://cdn.shopify.com/videos/c/o/v/19c767c7c06c46d080bf772cac5e60e4.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
 
-    <div class="frame">
-      <div id="countdown">
-        <div class="countdown-row">
-          <div class="countdown-item" id="days-container">
-            <span id="days">01</span>
-            <div class="label">Days</div>
-          </div>
-          <div class="countdown-item" id="hours-container">
-            <span id="hours">02</span>
-            <div class="label">Hours</div>
-          </div>
+    <div class="countdown">
+      <div class="countdown-item">
+        <div class="number-box">
+          <span id="days">01</span>
         </div>
-        <div class="countdown-row">
-          <div class="countdown-item" id="minutes-container">
-            <span id="minutes">30</span>
-            <div class="label">Minutes</div>
-          </div>
-          <div class="countdown-item" id="seconds-container">
-            <span id="seconds">60</span>
-            <div class="label">Seconds</div>
-          </div>
+        <div class="label">Day</div>
+      </div>
+
+      <div class="countdown-item">
+        <div class="number-box">
+          <span id="hours">02</span>
         </div>
+        <div class="label">Hour</div>
+      </div>
+
+      <div class="countdown-item">
+        <div class="number-box">
+          <span id="minutes">30</span>
+        </div>
+        <div class="label">Minutes</div>
+      </div>
+
+      <div class="countdown-item">
+        <div class="number-box">
+          <span id="seconds">20</span>
+        </div>
+        <div class="label">Seconds</div>
       </div>
     </div>
-
-    <script>
+  <script>
       function revealItem(elementId, delay) {
         setTimeout(() => {
           document.getElementById(elementId).classList.add("pop-in");
