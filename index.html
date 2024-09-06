@@ -26,20 +26,20 @@
         image-rendering: crisp-edges;
       }
 
-      /* Add video background styling */
-      video.bg-video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        z-index: -1;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-        opacity: 0.5;
-      }
+  video.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw; /* Make sure the width covers the entire viewport */
+  height: auto; /* Keep the aspect ratio */
+  min-height: 100vh; /* Ensure the video fits the height of the viewport */
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  object-fit: cover; /* Ensures the video covers the entire screen */
+  pointer-events: none; /* Prevent interaction with the video */
+}
+
+
 
       .frame {
         width: 100%;
@@ -131,8 +131,8 @@
     </style>
   </head>
   <body>
-    <video class="bg-video" autoplay muted loop>
-      <source src="https://cdn.shopify.com/videos/c/o/v/b1e5ca4e49cd4f71957be8a8581de23a.mp4" type="video/mp4" />
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="https://cdn.shopify.com/videos/c/o/v/19c767c7c06c46d080bf772cac5e60e4.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
 
