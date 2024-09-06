@@ -27,9 +27,7 @@
 
       video.bg-video {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+       width: 100%;
         height: 100%;
         z-index: -1;
         object-fit: fill; /* Ensures the video covers the entire screen */
@@ -41,7 +39,10 @@
         max-width: 400px;
         margin: 0 auto;
         padding: 20px;
+          display: flex;
+  justify-content: center;
       }
+
 
       h2 {
         font-size: 2.2rem;
@@ -124,7 +125,7 @@
   </head>
   <body>
     <video class="bg-video" autoplay muted loop playsinline>
-      <source src="https://cdn.shopify.com/videos/c/o/v/b1e5ca4e49cd4f71957be8a8581de23a.mp4" type="video/mp4" />
+      <source src="https://cdn.shopify.com/videos/c/o/v/19c767c7c06c46d080bf772cac5e60e4.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
 
