@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ultra-Fast Luxury Countdown Timer</title>
     <style>
       @import url("https://fonts.cdnfonts.com/css/garet");
@@ -20,24 +20,26 @@
         text-align: center;
         position: relative;
         overflow: hidden;
+        /* Enhance text rendering for HD quality */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         image-rendering: crisp-edges;
-        font-smoothing: always;
       }
 
-      video.bg-video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100vw;
-        height: auto;
-        min-height: 100vh;
-        z-index: -1;
-        transform: translate(-50%, -50%);
-        object-fit: cover;
-        pointer-events: none;
-      }
+  video.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw; /* Make sure the width covers the entire viewport */
+  height: auto; /* Keep the aspect ratio */
+  min-height: 100vh; /* Ensure the video fits the height of the viewport */
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  object-fit: cover; /* Ensures the video covers the entire screen */
+  pointer-events: none; /* Prevent interaction with the video */
+}
+
+
 
       .frame {
         width: 100%;
@@ -85,6 +87,7 @@
         flex-direction: column;
         align-items: center;
         transition: opacity 0.5s ease, transform 0.5s ease;
+        /* Add shadow for better visual contrast */
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
@@ -115,7 +118,7 @@
         .countdown-item .label {
           font-size: 0.9rem;
         }
-
+        /* Optimize font rendering for smaller screens */
         -webkit-font-smoothing: subpixel-antialiased;
         text-rendering: optimizeLegibility;
       }
@@ -159,36 +162,47 @@
     </div>
 
     <script>
+      // Function to trigger pop-in animation with a delay
       function revealItem(elementId, delay) {
         setTimeout(() => {
           document.getElementById(elementId).classList.add("pop-in");
         }, delay);
       }
 
-      revealItem("days-container", 500); 
-      revealItem("hours-container", 1500); 
-      revealItem("minutes-container", 2500); 
-      revealItem("seconds-container", 3500);
+      // Apply pop-in animation to each item with a delay
+      revealItem("days-container", 500); // Day appears first
+      revealItem("hours-container", 1500); // Hour appears second
+      revealItem("minutes-container", 2500); // Minute appears third
+      revealItem("seconds-container", 3500); // Second appears last
 
+      // Initialize the starting values
       let seconds = 60;
       let minutes = 30;
 
+      // Countdown functionality at 15x speed
       let countdownFunction = setInterval(function () {
+        // Decrease seconds
         seconds -= 1;
+
+        // If seconds reach 0, decrease minutes and reset seconds
         if (seconds < 0) {
           seconds = 59;
           minutes -= 1;
         }
+
+        // If minutes reach 0, reset to 30 for the video
         if (minutes < 0) {
           minutes = 30;
         }
 
+        // Keep day and hour static for video recording
         document.getElementById("days").innerHTML = "01";
         document.getElementById("hours").innerHTML = "02";
 
+        // Update minutes and seconds
         document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, "0");
         document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, "0");
-      }, 67); 
+      }, 67); // Update every 67ms (15x speed)
     </script>
   </body>
 </html>
