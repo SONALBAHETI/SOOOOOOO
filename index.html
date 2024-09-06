@@ -8,7 +8,7 @@
       @import url("https://fonts.cdnfonts.com/css/garet");
 
       body {
-        font-family: Garet, sans-serif;
+        font-family: Garet;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -26,18 +26,17 @@
         image-rendering: crisp-edges;
       }
 
-  video.bg-video {
+ video.bg-video {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100vw; /* Make sure the width covers the entire viewport */
-  height: auto; /* Keep the aspect ratio */
-  min-height: 100vh; /* Ensure the video fits the height of the viewport */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Ensure it covers the entire width */
+  height: 100vh; /* Ensure it covers the entire height */
   z-index: -1;
-  transform: translate(-50%, -50%);
-  object-fit: cover; /* Ensures the video covers the entire screen */
-  pointer-events: none; /* Prevent interaction with the video */
+  object-fit: cover; /* Ensure the video fills the screen without gaps */
+  pointer-events: none; /* Disable interaction with the video */
 }
+
 
 
 
