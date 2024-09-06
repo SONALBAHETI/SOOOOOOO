@@ -1,149 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Flip Countdown Timer</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipdown Countdown Timer</title>
     <style>
-      body {
-        font-family: 'Arial', sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        background-color: #302D3A; /* Updated background color */
-        color: #f5f5f5;
-        text-align: center;
-      }
-
-      h2 {
-        font-size: 2rem;
-        margin-bottom: 20px;
-        color: #f5eb9b;
-      }
-
-     .countdown {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px; /* Reduced gap between boxes */
-}
-
-.countdown-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1 1 calc(50% - 10px); /* Reduced space between boxes */
-}
-
-.number-box {
-    background: #1c1c1c;
-    border-radius: 10px;
-    padding: 15px;
-    width: 100px; /* Adjusted width */
-    height: 130px; /* Adjusted height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.number-box span {
-    font-size: 4rem; /* Adjusted font size */
-    font-weight: bold;
-    color: #f5eb9b;
-}
-
-
-      .label {
-        font-size: 1.2rem; /* Slightly larger label text */
-        color: #bb984d;
-        margin-top: 10px;
-        text-transform: uppercase;
-      }
-
-      /* Media query for smaller screens */
-      @media (max-width: 480px) {
-        .countdown-item {
-          flex: 1 1 45%; /* Two boxes per line with space in between */
-          margin-bottom: 20px;
+        /* Style from style.css */
+        :root {
+          --flipdown-header-size: 1.2rem;
+          --flipdown-timer-size: 5rem;
+          --flipdown-spacing: 1rem;
+          --flipdown-face-color: #333;
+          --flipdown-card-color: #f5f5f5;
+          --flipdown-card-background: #212121;
         }
 
-        .number-box {
-          width: 100px; /* Slightly reduce box size */
-          height: 130px;
+        * {
+          box-sizing: border-box;
         }
 
-        .number-box span {
-          font-size: 3.5rem;  /* Adjust number size for smaller screens */
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background: #282c34;
+          color: white;
+          text-align: center;
         }
-      }
+
+        h1 {
+          margin-bottom: 1rem;
+        }
+
+        #flipdown {
+          display: flex;
+          justify-content: center;
+          margin-top: var(--flipdown-spacing);
+        }
+
+        .flipdown {
+          font-family: sans-serif;
+          color: var(--flipdown-face-color);
+        }
+
+        .flipdown__face {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: var(--flipdown-card-background);
+          margin: 0 5px;
+          padding: 10px;
+          border-radius: 10px;
+          width: var(--flipdown-timer-size);
+        }
+
+        .flipdown__face .flipdown__rotor {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+
+        .flipdown__rotor-group {
+          position: relative;
+          width: 50%;
+        }
+
+        .flipdown__rotor {
+          position: relative;
+          height: var(--flipdown-timer-size);
+          overflow: hidden;
+          border-radius: 0.5rem;
+        }
+
+        .flipdown__rotor-upper,
+        .flipdown__rotor-lower {
+          position: absolute;
+          width: 100%;
+          height: 50%;
+          text-align: center;
+          line-height: calc(var(--flipdown-timer-size) / 2);
+          font-size: calc(var(--flipdown-timer-size) * 0.8);
+        }
+
+        .flipdown__rotor-upper {
+          top: 0;
+          background-color: var(--flipdown-card-color);
+          z-index: 2;
+        }
+
+        .flipdown__rotor-lower {
+          bottom: 0;
+          background-color: var(--flipdown-card-color);
+          z-index: 1;
+        }
+
+        .flipdown__rotor .flipdown__rotor-flip {
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          height: 50%;
+          transform-origin: 50% 0%;
+          transform-style: preserve-3d;
+          backface-visibility: hidden;
+        }
+
+        .flipdown__rotor-flip .flipdown__rotor-upper,
+        .flipdown__rotor-flip .flipdown__rotor-lower {
+          z-index: 1;
+        }
+
+        .flipdown__rotor-flip .flipdown__rotor-upper {
+          top: -50%;
+        }
+
+        .flipdown__rotor-flip .flipdown__rotor-lower {
+          top: 0;
+          transform: rotateX(-180deg);
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
 
-    <div class="countdown">
-      <div class="countdown-item">
-        <div class="number-box">
-          <span id="days">01</span>
-        </div>
-        <div class="label">Day</div>
-      </div>
+<h1>Countdown Timer</h1>
+<div id="flipdown" class="flipdown"></div>
 
-      <div class="countdown-item">
-        <div class="number-box">
-          <span id="hours">02</span>
-        </div>
-        <div class="label">Hour</div>
-      </div>
-
-      <div class="countdown-item">
-        <div class="number-box">
-          <span id="minutes">30</span>
-        </div>
-        <div class="label">Minutes</div>
-      </div>
-
-      <div class="countdown-item">
-        <div class="number-box">
-          <span id="seconds">20</span>
-        </div>
-        <div class="label">Seconds</div>
-      </div>
-    </div>
-  <script>
-      function revealItem(elementId, delay) {
-        setTimeout(() => {
-          document.getElementById(elementId).classList.add("pop-in");
-        }, delay);
-      }
-
-      revealItem("days-container", 500); 
-      revealItem("hours-container", 1500); 
-      revealItem("minutes-container", 2500); 
-      revealItem("seconds-container", 3500);
-
-      let seconds = 60;
-      let minutes = 30;
-
-      let countdownFunction = setInterval(function () {
-        seconds -= 1;
-        if (seconds < 0) {
-          seconds = 59;
-          minutes -= 1;
+<script>
+    // Script from main.js
+    class Flipdown {
+        constructor(uts, el = "flipdown") {
+            this.version = "0.3.2";
+            this.initialised = false;
+            this.now = this._getTime();
+            this.epoch = uts;
+            this.countdownEnded = false;
+            this.hasEndedCallback = null;
+            this.element = document.getElementById(el);
+            this.rotors = [];
+            this.rotorLeafFront = [];
+            this.rotorLeafRear = [];
+            this.rotorTop = [];
+            this.rotorBottom = [];
+            this.countdown = null;
+            this.daysRemaining = 0;
+            this.hoursRemaining = 0;
+            this.minutesRemaining = 0;
+            this.secondsRemaining = 0;
+            if (this.element) {
+                this._setOptions();
+                this._setRotors();
+                this._tick();
+                this._updateClockValues(true);
+                this.initialised = true;
+            } else {
+                throw new Error(`Flipdown error: element with id "${el}" not found.`);
+            }
         }
-        if (minutes < 0) {
-          minutes = 30;
+        
+        start() {
+            this.countdown = setInterval(() => this._tick(), 1000);
+            return this;
         }
 
-        document.getElementById("days").innerHTML = "01";
-        document.getElementById("hours").innerHTML = "02";
+        ifEnded(cb) {
+            this.hasEndedCallback = () => cb();
+            return this;
+        }
 
-        document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, "0");
-        document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, "0");
-      }, 67); 
-    </script>
-  </body>
+        _getTime() {
+            return new Date().getTime() / 1000;
+        }
+
+        _hasCountdownEnded() {
+            return this.epoch - this.now < 0;
+        }
+
+        _tick() {
+            this.now = this._getTime();
+            const diff = this.epoch - this.now <= 0 ? 0 : this.epoch - this.now;
+
+            this.daysRemaining = Math.floor(diff / 86400);
+            this.hoursRemaining = Math.floor(diff % 86400 / 3600);
+            this.minutesRemaining = Math.floor(diff % 86400 % 3600 / 60);
+            this.secondsRemaining = Math.floor(diff % 86400 % 3600 % 60);
+
+            this._updateClockValues();
+
+            if (this._hasCountdownEnded()) {
+                clearInterval(this.countdown);
+                this.hasEndedCallback && this.hasEndedCallback();
+            }
+        }
+
+        _setOptions() {
+            this.options = {
+                theme: this.element.dataset.theme || "dark"
+            };
+
+            this.element.classList.add(`flipdown--${this.options.theme}`);
+        }
+
+        _setRotors() {
+            const rotorCount = 4;
+            for (let i = 0; i < rotorCount; i++) {
+                this.rotors.push(document.createElement("div"));
+                const rotor = this.rotors[i];
+                rotor.className = "flipdown__rotor";
+                rotor.innerHTML = `
+                <div class="flipdown__rotor-group">
+                    <div class="flipdown__rotor-top"></div>
+                    <div class="flipdown__rotor-bottom"></div>
+                </div>
+                <div class="flipdown__rotor-group">
+                    <div class="flipdown__rotor-flip">
+                        <div class="flipdown__rotor-leaf-front"></div>
+                        <div class="flipdown__rotor-leaf-rear"></div>
+                    </div>
+                </div>
+                `;
+                this.element.appendChild(rotor);
+            }
+        }
+
+        _updateClockValues(init = false) {
+            const currentRotorValues = [
+                this.daysRemaining.toString().padStart(2, "0"),
+                this.hoursRemaining.toString().padStart(2, "0"),
+                this.minutesRemaining.toString().padStart(2, "0"),
+                this.secondsRemaining.toString().padStart(2, "0")
+            ];
+
+            if (init) {
+                this.rotorLeafFront.forEach((el, i) => el.innerHTML = currentRotorValues[i]);
+                this.rotorLeafRear.forEach((el, i) => el.innerHTML = currentRotorValues[i]);
+                this.rotorTop.forEach((el, i) => el.innerHTML = currentRotorValues[i]);
+                this.rotorBottom.forEach((el, i) => el.innerHTML = currentRotorValues[i]);
+            }
+        }
+    }
+
+    // Initialize the countdown timer with the current time plus 24 hours
+    const now = new Date().getTime() / 1000;
+    new Flipdown(now + 86400).start();
+</script>
+
+</body>
 </html>
